@@ -5,14 +5,15 @@ import os
 from bs4 import BeautifulSoup
 
 
-ibericMainData = pd.read_csv('data/ibericMainData.csv')
+ibericMainData = pd.read_csv('../data/parkingSpots.csv')
 columns = ["placeId" , "reviewId", "reviewRate", "reviewUser", "reviewDate", "reviewContent"]
 df = pd.DataFrame(columns=columns)
-
+reviewChunk = 50;
 # Initialize an empty list to store DataFrames for each iteration
 dfs = []
 
 for index, row in ibericMainData.iterrows():
+
     rowUrl = row['url']
     placeId = row['id']
     print("Working for " + str(placeId) )
@@ -54,8 +55,15 @@ for index, row in ibericMainData.iterrows():
         # Append the DataFrame to the list
         dfs.append(row_df)
 
+        if index == reviewChunk:
+            df = pd.concat(dfs, ignore_index=True)
+            df.to_csv('../data/reviews/PlaceReview_'+str(reviewChunk)+'.csv', index=False)
+            dfs = []
+            df = pd.DataFrame(columns=columns)
+            reviewChunk = reviewChunk + 50
+
 # Concatenate all DataFrames in the list along rows
 df = pd.concat(dfs, ignore_index=True)
 
-df.to_csv('data/ibericMainDataComments.csv' , index=False)
+df.to_csv('../data/reviews/PlaceReview_Final.csv' , index=False)
 

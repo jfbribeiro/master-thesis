@@ -4,7 +4,7 @@ import requests
 import os
 
 
-df = pd.read_csv('data/worldcities.csv')
+df = pd.read_csv('../data/worldcities.csv')
 iberic_countries = df[(df["country"] == "Portugal") | (df["country"] == "Spain")]
 iberic_countries['lat'] = iberic_countries['lat'].astype(str).str.replace(',', '.')
 iberic_countries['lng'] = iberic_countries['lng'].astype(str).str.replace(',', '.')

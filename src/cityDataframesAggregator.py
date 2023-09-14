@@ -1,10 +1,8 @@
 import pandas as pd
 import os
 
-# Convert JSON to DataFrame Using read_json()
-
-
-parent_folder = 'data/generated'
+# Join all cities dataframes
+parent_folder = '../data/generated'
 dfs = []
 
 for subfolder in os.listdir(parent_folder):
@@ -30,4 +28,4 @@ df_sorted = final.sort_values(by='id', ascending=True)
 # Display the counts
 print(df_sorted.head())
 
-df_sorted.to_csv('data/ibericMainData.csv', index=False)
+df_sorted.to_csv('../data/parkingSpots2.csv', index=False)
